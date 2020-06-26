@@ -280,8 +280,8 @@ class Application(funcs, Relatorios):
 
     def listaFrame2(self):
         self.style = ttk.Style()
-        self.style.configure("mystyle.Treeview", bd=1, font=('Alef', 11))  # Modify the font of the body
-        self.style.configure("mystyle.Treeview.Heading", font=('Alef', 11, 'bold'))  # Modify the font of the headings
+        self.style.configure("mystyle.Treeview", bd=1, font=('Alef', 11))
+        self.style.configure("mystyle.Treeview.Heading", font=('Alef', 11, 'bold'))
 
         self.listaUser = ttk.Treeview(self.frame2, height=3,
                                       column=('col1', 'col2', 'col3', 'col4'),
