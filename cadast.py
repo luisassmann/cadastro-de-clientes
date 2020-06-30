@@ -1,6 +1,3 @@
-"""
-Cadastro de clientes usando Tkinter;;;
-"""
 # ----- Window -----
 from tkinter import *
 from tkinter.font import Font
