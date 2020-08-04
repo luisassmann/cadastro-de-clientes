@@ -1,7 +1,7 @@
 # Cadastro de Clientes
 
 
-#### Tecnologias utilizadas
+#### Ferramentas
 - Python3.8
 - tkinter
 - sqlite3
