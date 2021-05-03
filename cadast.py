@@ -2,7 +2,7 @@
 from tkinter import *
 from tkinter.font import Font
 from tkinter import ttk
-from tkinter import tix
+# from tkinter import tix
 import time
 
 # ----- DataBase ----
@@ -18,7 +18,7 @@ from reportlab.platypus import SimpleDocTemplate, Image
 # -- Open Browser --
 import webbrowser
 
-root = tix.Tk()
+root = Tk()
 
 font = Font(family='Verdana', size=9, weight='bold')
 font_bold = Font(family='Alef', size=10, weight='bold')
@@ -196,7 +196,7 @@ class Application(funcs, relatorios):
         self.root.title('Cadastro')
         self.root.configure(background='#1e2050')
         self.root.geometry('700x500')
-        self.root.iconbitmap('./favicon.ico')
+        # self.root.iconbitmap('./favicon.ico')
         self.root.resizable(True, True)
         self.root.minsize(width=700, height=400)
 
@@ -239,8 +239,8 @@ class Application(funcs, relatorios):
 
 
         balao_msg = 'Limpa os Campos de Cadastro'
-        self.limpar_balloon = tix.Balloon(self.aba1, initwait=600)
-        self.limpar_balloon.bind_widget(self.bt_limpar, balloonmsg=balao_msg)
+        # self.limpar_balloon = tix.Balloon(self.aba1, initwait=600)
+        # self.limpar_balloon.bind_widget(self.bt_limpar, balloonmsg=balao_msg)
 
 
         # botão Buscar;
@@ -250,8 +250,8 @@ class Application(funcs, relatorios):
         self.bt_buscar.place(relx=0.31, rely=0.1, relwidth=0.1, relheight=0.15)
 
         msg_balloon = 'Digite no campo Nome o Cliente a Pesquisar.'
-        self.buscar_balao = tix.Balloon(self.aba1, initwait=600)
-        self.buscar_balao.bind_widget(self.bt_buscar, balloonmsg=msg_balloon)
+        # self.buscar_balao = tix.Balloon(self.aba1, initwait=600)
+        # self.buscar_balao.bind_widget(self.bt_buscar, balloonmsg=msg_balloon)
 
 
         # botão Novo;
@@ -262,8 +262,8 @@ class Application(funcs, relatorios):
 
 
         msg_novo = 'Adiciona um novo Cliente'
-        self.novo_balloon = tix.Balloon(self.aba1, initwait=600)
-        self.novo_balloon.bind_widget(self.bt_novo, balloonmsg=msg_novo)
+        # self.novo_balloon = tix.Balloon(self.aba1, initwait=600)
+        # self.novo_balloon.bind_widget(self.bt_novo, balloonmsg=msg_novo)
 
 
         # botão Alterar;
@@ -273,8 +273,8 @@ class Application(funcs, relatorios):
         self.bt_alterar.place(relx=0.72, rely=0.1, relwidth=0.1, relheight=0.15)
 
         msg_alterar = 'Altera os dados de um Cliente'
-        self.alterar_balloon = tix.Balloon(self.aba1, initwait=600)
-        self.alterar_balloon.bind_widget(self.bt_alterar, balloonmsg=msg_alterar)
+        # self.alterar_balloon = tix.Balloon(self.aba1, initwait=600)
+        # self.alterar_balloon.bind_widget(self.bt_alterar, balloonmsg=msg_alterar)
 
         # botão Apagar;
         self.bt_apagar = Button(self.aba1, text='Apagar', activebackground='#8e1e2e',
@@ -283,8 +283,8 @@ class Application(funcs, relatorios):
         self.bt_apagar.place(relx=0.83, rely=0.1, relwidth=0.1, relheight=0.15)
 
         msg_apagar = 'Apaga o Cliente'
-        self.apagar_balloon = tix.Balloon(self.aba1, initwait=600)
-        self.apagar_balloon.bind_widget(self.bt_apagar, balloonmsg=msg_apagar)
+        # self.apagar_balloon = tix.Balloon(self.aba1, initwait=600)
+        # self.apagar_balloon.bind_widget(self.bt_apagar, balloonmsg=msg_apagar)
 
 
         # labels Códigos;
@@ -378,3 +378,4 @@ class Application(funcs, relatorios):
 
 
 Application()
+
