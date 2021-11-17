@@ -1,22 +1,10 @@
-# ----- Window -----
 from tkinter import *
 from tkinter.font import Font
 from tkinter import ttk
-# from tkinter import tix
-import time
 
-# ----- DataBase ----
-import sqlite3
+from funcs import Funcs
+from relatorios import Relats
 
-# ----- PDF - generator ------
-from reportlab.pdfgen import canvas
-from reportlab.lib.pagesizes import letter, A4
-from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.platypus import SimpleDocTemplate, Image
-
-# -- Open Browser --
-import webbrowser
 
 root = Tk()
 
@@ -25,162 +13,7 @@ font_bold = Font(family='Alef', size=10, weight='bold')
 font_input = Font(family='Arial', size=10, weight='bold')
 
 
-# -------------- PDF - generator ----------------
-class relatorios():
-    def printCliente(self):
-        webbrowser.open("cliente.pdf")
-
-    def geradorRelatCliente(self):
-        self.archivepdf = canvas.Canvas("./cliente.pdf")
-
-        self.codigoRel = self.entryCodigo.get()
-        self.nomeRel = self.entryNome.get()
-        self.telefoneRel = self.entryTelefone.get()
-        self.cidadeRel = self.entryCidade.get()
-
-        # --- Título ---
-        self.archivepdf.setFont("Helvetica-Bold", 24)
-        self.archivepdf.drawString(200, 790, 'Ficha do Cliente')
-
-        # --- Dados do Cliente ---
-        self.archivepdf.setFont("Helvetica-Bold", 18)
-        self.archivepdf.drawString(50, 700, 'Código: ')
-        self.archivepdf.drawString(50, 670, 'Nome: ')
-        self.archivepdf.drawString(50, 640, 'Telefone: ')
-        self.archivepdf.drawString(50, 610, 'Cidade: ')
-
-        self.archivepdf.setFont("Helvetica", 18)
-        self.archivepdf.drawString(120, 700, self.codigoRel)
-        self.archivepdf.drawString(110, 670, self.nomeRel)
-        self.archivepdf.drawString(134, 640, self.telefoneRel)
-        self.archivepdf.drawString(120, 610, self.cidadeRel)
-
-        self.archivepdf.rect(20, 550, 550, 280, fill=False, stroke=True)
-
-        self.archivepdf.showPage()
-        self.archivepdf.save()
-        self.printCliente()
-
-
-# ---------------- BACK - END -------------------
-class funcs():
-    def limpar(self):
-        self.entryCodigo.delete(0, END)
-        self.entryNome.delete(0, END)
-        self.entryTelefone.delete(0, END)
-        self.entryCidade.delete(0, END)
-
-    def conectarDB(self):
-        self.conn = sqlite3.connect('./clientes.db')
-        self.cursor = self.conn.cursor()
-        print('Conectando ao Banco de Dados...')
-
-    def desconectarDB(self):
-        self.conn.close()
-        print('Desconectando o Banco de Dados...')
-
-    def montaTabelas(self):
-        self.conectarDB()
-
-        # -- Criação da Tabela --
-
-        self.cursor.execute("""
-            CREATE TABLE IF NOT EXISTS clientes (
-                cod INTEGER PRIMARY KEY,
-                nome_cliente CHAR(40) NOT NULL,
-                telefone INTEGER(20),
-                cidade CHAR(40)
-            );
-        """)
-
-        self.conn.commit(), print("Banco de Dados Criado...")
-        self.desconectarDB()
-
-    def variaveis(self):
-        self.codigo = self.entryCodigo.get()
-        self.nome = self.entryNome.get()
-        self.telefone = self.entryTelefone.get()
-        self.cidade = self.entryCidade.get()
-
-    def addCliente(self):
-        self.variaveis()
-        self.conectarDB()
-
-        self.cursor.execute(""" INSERT INTO clientes (nome_cliente, telefone, cidade)
-            VALUES (?, ?, ?)""", (self.nome, self.telefone, self.cidade))
-
-        self.conn.commit()
-        self.desconectarDB()
-        self.selectLista()
-        self.limpar()
-
-    def selectLista(self):
-        self.listaUser.delete(*self.listaUser.get_children())
-        self.conectarDB()
-
-        lista = self.cursor.execute(""" SELECT cod, nome_cliente, telefone, cidade FROM clientes
-            ORDER BY nome_cliente ASC; """)
-
-        for i in lista:
-            self.listaUser.insert("", END, values=i)
-
-        self.desconectarDB()
-
-    def duploClick(self, event):
-        self.limpar()
-        self.listaUser.selection()
-
-        for n in self.listaUser.selection():
-            col1, col2, col3, col4 = self.listaUser.item(n, 'values')
-            self.entryCodigo.insert(END, col1)
-            self.entryNome.insert(END, col2)
-            self.entryTelefone.insert(END, col3)
-            self.entryCidade.insert(END, col4)
-
-    def delCliente(self):
-        self.variaveis()
-        self.conectarDB()
-
-        self.cursor.execute("""DELETE FROM clientes WHERE cod = ? """, (self.codigo,))
-        self.conn.commit()
-
-        self.desconectarDB()
-        self.limpar()
-        self.selectLista()
-
-    def alterarCliente(self):
-        self.variaveis()
-        self.conectarDB()
-
-        self.cursor.execute(""" UPDATE clientes SET nome_cliente = ?, telefone = ?, cidade = ? WHERE cod = ? """,
-                            (self.nome, self.telefone, self.cidade, self.codigo))
-        self.conn.commit()
-
-        self.desconectarDB()
-        self.selectLista()
-        self.limpar()
-
-    def buscaCliente(self):
-        self.conectarDB()
-        self.listaUser.delete(*self.listaUser.get_children())
-
-        self.entryNome.insert(END, '%')
-        nome = self.entryNome.get()
-
-        self.cursor.execute("""
-            SELECT cod, nome_cliente, telefone, cidade FROM clientes
-            WHERE nome_cliente LIKE '%s' ORDER BY nome_cliente ASC""" % nome)
-
-        buscaNomeCliente = self.cursor.fetchall()
-        for i in buscaNomeCliente:
-            self.listaUser.insert("", END, values=i)
-
-        self.limpar()
-        self.desconectarDB()
-
-
-# ---------------- FRONT - END ------------------
-class Application(funcs, relatorios):
+class Application(Funcs, Relats):
     def __init__(self):
         self.root = root
         self.tela()
@@ -375,7 +208,3 @@ class Application(funcs, relatorios):
         filemenu1.add_command(label="Limpar Tela", command=self.limpar)
 
         filemenu2.add_command(label='Ficha do cliente', command=self.geradorRelatCliente)
-
-
-Application()
-
