@@ -13,11 +13,11 @@ class Funcs():
     def conectarDB(self):
         self.conn = sqlite3.connect('bin/clientes.db')
         self.cursor = self.conn.cursor()
-        print('Conectando ao Banco de Dados...')
+        # print('Conectando ao Banco de Dados...')
 
     def desconectarDB(self):
         self.conn.close()
-        print('Desconectando o Banco de Dados...')
+        # print('Desconectando o Banco de Dados...')
 
     def montaTabelas(self):
         self.conectarDB()
@@ -33,7 +33,7 @@ class Funcs():
             );
         """)
 
-        self.conn.commit(), print("Banco de Dados Criado...")
+        self.conn.commit()  #, print("Banco de Dados Criado...")
         self.desconectarDB()
 
     def variaveis(self):

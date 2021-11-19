@@ -161,7 +161,7 @@ class Application(Funcs, Relats):
         self.popup.place(relx=0.05, rely=0.05, relwidth=0.2, relheight=0.2)
         self.estado_civil = self.TipVar.get()
 
-        print(self.estado_civil)
+        # print(self.estado_civil)
 
 
     def listaFrame2(self):
