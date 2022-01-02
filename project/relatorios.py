@@ -3,13 +3,25 @@ from reportlab.lib.pagesizes import letter, A4
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.platypus import SimpleDocTemplate, Image
+import sys
+import os
+import pathlib
 
 import webbrowser
 
 
 class Relats():
     def printCliente(self):
-        webbrowser.open("bin/cliente.pdf")
+        # path da raiz do programa
+        cur_path = pathlib.Path().resolve()
+        if sys.platform.startswith("win"):
+            chrome_path = "C:\Program Files\Google\Chrome\Application\chrome.exe"
+            try:
+                os.system(f"\"{chrome_path}\" {cur_path}/bin/cliente.pdf")
+            except OSError as error:
+                print(error)
+        elif sys.platform.startswith("linux"):
+            webbrowser.open("bin/cliente.pdf")
 
     def geradorRelatCliente(self):
         self.archivepdf = canvas.Canvas("bin/cliente.pdf")

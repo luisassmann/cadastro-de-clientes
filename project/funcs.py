@@ -1,5 +1,5 @@
-from tkinter import *
-
+from tkinter.constants import END
+from tkinter import Entry
 import sqlite3
 
 
@@ -60,6 +60,8 @@ class Funcs():
 
         lista = self.cursor.execute(""" SELECT cod, nome_cliente, telefone, cidade FROM clientes
             ORDER BY nome_cliente ASC; """)
+
+        print(lista)
 
         for i in lista:
             self.listaUser.insert("", END, values=i)
