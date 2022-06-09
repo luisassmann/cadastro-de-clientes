@@ -16,6 +16,7 @@ class Funcs():
         # print('Conectando ao Banco de Dados...')
 
     def desconectarDB(self):
+        self.cursor.close()
         self.conn.close()
         # print('Desconectando o Banco de Dados...')
 
