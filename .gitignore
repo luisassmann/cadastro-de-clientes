@@ -6,7 +6,6 @@ __pycache__/
 # Files that will be used in the application
 *.db
 *.pdf
-
 # C extensions
 *.so
 
