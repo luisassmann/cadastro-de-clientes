@@ -5,12 +5,12 @@ import sys
 def run():
     if sys.platform.startswith('linux'):
         try:
-            os.system("python3 -m pip install -r requirements.txt")
             os.system("sudo apt install python3-tk -y")
+            os.system("python3 -m pip install -r requirements.txt")
             os.system("python3 project/main.py")
         except OSError as error:
             print(error)
-    
+
     elif sys.platform.startswith('win'):
         try:
             os.system("python -m pip install -r requirements.txt")
